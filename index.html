@@ -102,23 +102,22 @@
             transform: scale(1.1);
         }
 
-        /* --- Story Love / Timeline Styles --- */
+        /* --- Story Love / Timeline Styles (UPDATED) --- */
         .timeline-container {
             position: relative;
-            padding: 0;
+            padding: 20px 0;
+            max-width: 500px;
+            margin: 0 auto;
         }
         .timeline-line {
             position: absolute;
-            left: 50%;
+            left: 20px; /* Garis di sisi kiri (Mobile friendly) */
             top: 0;
             bottom: 0;
-            width: 6px; /* Garis lebih tebal */
-            transform: translateX(-50%);
-            background-color: rgba(255, 255, 255, 0.15); /* Warna track lebih elegan di dark mode */
-            overflow: hidden;
+            width: 3px;
+            background-color: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
         }
-        /* Garis progress yang mengikuti scroll */
         .timeline-progress {
             position: absolute;
             left: 0;
@@ -126,107 +125,118 @@
             width: 100%;
             height: 0%;
             background-color: var(--main-pink);
-            box-shadow: 0 0 15px var(--main-pink); /* Efek Glow pada garis */
+            box-shadow: 0 0 10px var(--main-pink);
             transition: height 0.5s ease;
         }
 
         .timeline-item {
             position: relative;
-            margin-bottom: 180px;
-            opacity: 0.3;
+            margin-bottom: 60px;
+            padding-left: 50px; /* Memberi ruang untuk garis di kiri */
+            opacity: 0;
+            transform: translateY(30px);
             transition: all 0.8s ease;
-            width: 100%;
-            transform: translateY(50px); /* Animasi dari bawah */
         }
         .timeline-item.active {
             opacity: 1;
             transform: translateY(0);
         }
 
+        /* Dot Timeline di Kiri */
         .timeline-dot {
             position: absolute;
-            left: 50%;
-            top: 0;
-            width: 54px; /* Dot lebih besar */
-            height: 54px;
-            transform: translateX(-50%);
+            left: 7px; /* Center terhadap garis width 3px di left 20px -> (20 + 1.5) - (30/2) */
+            top: 20px;
+            width: 30px;
+            height: 30px;
             background-color: #f0f0f0;
-            border: 4px solid #fff; /* Tambahan border putih */
+            border: 3px solid var(--main-pink);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 10;
-            transition: all 0.5s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
         }
-        /* Ukuran Ikon SVG di dalam Dot */
         .timeline-dot svg {
-            width: 24px;
-            height: 24px;
-            transition: all 0.5s ease;
+            width: 14px;
+            height: 14px;
+            color: var(--main-pink);
         }
-
         .timeline-item.active .timeline-dot {
             background-color: var(--main-pink);
             border-color: white;
-            transform: translateX(-50%) scale(1.2);
-            animation: ripple 2s infinite; /* Animasi gelombang */
+            transform: scale(1.2);
         }
-
-        /* Animasi berdenyut untuk hati yang sedang aktif */
-        @keyframes heart-pulse {
-            0% { transform: scale(1.2); }
-            50% { transform: scale(1.4); }
-            100% { transform: scale(1.2); }
-        }
-        /* Animasi Ripple (Gelombang) pada Dot */
-        @keyframes ripple {
-            0% { box-shadow: 0 0 0 0 rgba(255, 133, 162, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 133, 162, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 133, 162, 0); }
-        }
-
         .timeline-item.active .timeline-dot svg {
+            color: white;
             animation: heart-pulse 1.5s infinite;
         }
 
-        .timeline-bubble {
-            width: 90%;
-            max-width: 400px; /* Batas lebar */
-            margin: 80px auto 0 auto; /* Jarak dari dot & center */
-            background-color: #ffffff;
-            color: var(--text-dark);
-            padding: 20px;
-            border-radius: 8px;
+        /* Story Card Style Baru */
+        .story-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+        .story-img-wrapper {
+            height: 180px;
+            width: 100%;
+            overflow: hidden;
             position: relative;
-            border: 1px solid #fce4ec;
-            transition: all 0.5s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            text-align: center; /* Teks di tengah */
         }
-        .timeline-item.active .timeline-bubble {
-            background-color: var(--main-pink);
-            color: white;
-            border-color: var(--main-pink);
+        .story-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
         }
-        .timeline-bubble::before {
+        .story-card:hover .story-img-wrapper img {
+            transform: scale(1.1);
+        }
+        .story-content {
+            padding: 20px;
+            text-align: left;
+            position: relative;
+        }
+        /* Panah kecil menunjuk ke dot */
+        .story-card::before {
             content: '';
             position: absolute;
-            left: 50%;
-            top: -10px; /* Panah di atas */
-            transform: translateX(-50%);
+            left: -8px;
+            top: 28px;
             width: 0;
             height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 10px solid #ffffff; /* Panah menunjuk ke atas */
-            transition: all 0.5s ease;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 8px solid white;
         }
-        .timeline-item.active .timeline-bubble::before {
-            border-bottom-color: var(--main-pink);
+
+        .story-date {
+            display: inline-block;
+            background: var(--soft-pink);
+            color: var(--main-pink);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
+        @keyframes heart-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
         /* Badge Tanggal Timeline */
         .timeline-date-badge {
             background: rgba(255, 255, 255, 0.8);
@@ -435,6 +445,59 @@
             50% { transform: translateX(-35%); }
             100% { transform: translateX(-50%); }
         }
+
+        /* --- New Gift Card Style --- */
+        .bank-card {
+            background: linear-gradient(135deg, #fff 0%, #fce4ec 100%);
+            border: 1px solid #fbcfe8;
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        .bank-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.2);
+            border-color: var(--main-pink);
+        }
+        /* Pattern or texture for card */
+        .bank-card::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 133, 162, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .copy-btn {
+            background: white;
+            color: var(--text-dark);
+            border: 1px solid #e5e7eb;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 50px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+        .copy-btn:hover {
+            background: var(--main-pink);
+            color: white;
+            border-color: var(--main-pink);
+        }
+        .copy-btn.copied {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
     </style>
 </head>
 <body class="antialiased overflow-hidden">
@@ -597,8 +660,8 @@
             </div>
         </section>
 
-        <!-- SECTION STORY LOVE (WITH SLIDESHOW BACKGROUND) -->
-        <section class="relative bg-black">
+        <!-- SECTION STORY LOVE (UPDATED WITH CARDS) -->
+        <section class="relative bg-black min-h-[160vh]">
             <!-- Background Slideshow -->
             <div class="sticky top-0 h-screen w-full overflow-hidden z-0">
                 <div class="absolute inset-0 overflow-hidden" style="mask-image: linear-gradient(to right, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to right, black 60%, transparent 100%);">
@@ -606,11 +669,11 @@
                         <!-- Images will be injected by JS -->
                     </div>
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
             </div>
 
             <!-- Timeline Content -->
-            <div class="relative z-10 -mt-[100vh] py-24 px-6 min-h-[200vh]">
+            <div class="relative z-10 -mt-[100vh] py-24 px-4 min-h-[180vh]">
                 <div class="text-center mb-16" data-aos="fade-up">
                     <h2 class="font-serif text-4xl text-white italic">Story Love</h2>
                     <div class="h-[1px] w-12 bg-pink-200 mx-auto mt-4"></div>
@@ -622,39 +685,54 @@
                         <div class="timeline-progress" id="progressLine"></div>
                     </div>
                     
-                    <!-- Timeline 1 -->
+                    <!-- Timeline 1: Pertemuan -->
                     <div class="timeline-item js-timeline-item">
                         <div class="timeline-dot">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748z"/></svg>
                         </div>
-                        <div class="timeline-bubble">
-                            <span class="timeline-date-badge">1 Mei 2018</span>
-                            <h4 class="font-serif text-2xl font-bold mb-3">Pertemuan Pertama</h4>
-                            <p class="text-sm leading-relaxed opacity-90">Kami pertama kali bertemu di bangku perkuliahan. Saling bertukar sapa dan merasa ada kecocokan sejak saat itu.</p>
+                        <div class="story-card">
+                            <div class="story-img-wrapper">
+                                <img src="https://wedaily.id/wp-content/uploads/2024/02/72ecca5017a40eb1c2fac742d21f93a7.jpg" alt="Pertemuan">
+                            </div>
+                            <div class="story-content">
+                                <span class="story-date">1 Mei 2018</span>
+                                <h4 class="font-serif text-2xl font-bold mb-3 text-gray-800">Pertemuan Pertama</h4>
+                                <p class="text-sm leading-relaxed text-gray-600">Pertemuan manis di bangku perkuliahan. Saling bertukar sapa dan merasa ada kecocokan yang tak terduga sejak saat itu.</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Timeline 2 -->
+                    <!-- Timeline 2: Hubungan -->
                     <div class="timeline-item js-timeline-item">
                         <div class="timeline-dot">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748z"/></svg>
                         </div>
-                        <div class="timeline-bubble">
-                            <span class="timeline-date-badge">1 Juni 2018</span>
-                            <h4 class="font-serif text-2xl font-bold mb-3">Menjalin Hubungan</h4>
-                            <p class="text-sm leading-relaxed opacity-90">Setelah satu bulan mengenal satu sama lain, kami memutuskan untuk menjalin komitmen lebih serius dalam ikatan pacaran.</p>
+                        <div class="story-card">
+                            <div class="story-img-wrapper">
+                                <img src="https://wedaily.id/wp-content/uploads/2024/02/16eea3b71c7a234325bc6da0981e87e7.jpg" alt="Hubungan">
+                            </div>
+                            <div class="story-content">
+                                <span class="story-date">1 Juni 2018</span>
+                                <h4 class="font-serif text-2xl font-bold mb-3 text-gray-800">Menjalin Hubungan</h4>
+                                <p class="text-sm leading-relaxed text-gray-600">Setelah satu bulan saling mengenal, kami memutuskan untuk mengikat komitmen serius dan melangkah bersama.</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Timeline 3 -->
+                    <!-- Timeline 3: Lamaran -->
                     <div class="timeline-item js-timeline-item">
                         <div class="timeline-dot">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748z"/></svg>
                         </div>
-                        <div class="timeline-bubble">
-                            <span class="timeline-date-badge">1 Juli 2027</span>
-                            <h4 class="font-serif text-2xl font-bold mb-3">Lamaran</h4>
-                            <p class="text-sm leading-relaxed opacity-90">Di hari yang cerah, Alex memberanikan diri untuk melamar Anita. Sebuah langkah baru menuju jenjang pernikahan.</p>
+                        <div class="story-card">
+                            <div class="story-img-wrapper">
+                                <img src="https://wedaily.id/wp-content/uploads/2024/02/b7f4dc7ff0b9873b25457fb69387359b.jpg" alt="Lamaran">
+                            </div>
+                            <div class="story-content">
+                                <span class="story-date">1 Juli 2027</span>
+                                <h4 class="font-serif text-2xl font-bold mb-3 text-gray-800">Lamaran</h4>
+                                <p class="text-sm leading-relaxed text-gray-600">Di hari yang cerah, Alex memberanikan diri untuk melamar Anita. Sebuah langkah besar menuju ikatan suci pernikahan.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -702,33 +780,85 @@
             </div>
         </section>
 
-        <!-- SECTION: KIRIM HADIAH -->
+        <!-- SECTION: KIRIM HADIAH (UPDATED) -->
         <section class="py-20 px-6 bg-white text-center">
             <div data-aos="fade-up">
                 <h2 class="font-serif text-4xl text-pink-theme italic">Kirim Hadiah</h2>
-                <p class="text-xs text-gray-500 mt-4 max-w-xs mx-auto">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara digital.</p>
-                <button id="btnGift" class="mt-8 bg-pink-theme text-white py-3 px-8 rounded-full font-bold text-sm shadow-lg shadow-pink-100 hover:bg-pink-400 transition flex items-center gap-2 mx-auto">
+                <div class="h-[1px] w-20 bg-pink-200 mx-auto mt-4 mb-6"></div>
+                <p class="text-xs text-gray-500 mt-4 max-w-xs mx-auto mb-8 leading-relaxed">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara digital.</p>
+                
+                <button id="btnGift" class="bg-pink-theme text-white py-3 px-8 rounded-full font-bold text-sm shadow-lg shadow-pink-100 hover:bg-pink-400 transition flex items-center gap-2 mx-auto transform hover:scale-105">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/></svg>
                     Kirim Hadiah
                 </button>
             </div>
             
             <!-- Detail Hadiah (Hidden by default) -->
-            <div id="gift-details" class="hidden mt-8 text-left max-w-sm mx-auto" data-aos="fade-up">
-                <div class="border rounded-lg p-4 space-y-4 bg-gray-50">
-                    <div class="text-center">
-                        <p class="font-bold text-gray-700">BCA</p>
-                        <p class="text-lg font-mono tracking-wider my-2" id="bca-number">1234567890</p>
-                        <p class="text-sm text-gray-600">a.n. Anita Septiani</p>
-                        <button onclick="copyToClipboard('bca-number')" class="mt-2 text-xs bg-gray-200 text-gray-700 px-3 py-1 rounded-full hover:bg-gray-300">Salin No. Rekening</button>
+            <div id="gift-details" class="hidden mt-10 max-w-sm mx-auto" data-aos="fade-up">
+                
+                <div class="space-y-6 animate__animated animate__fadeInUp">
+                    
+                    <!-- Kartu BCA -->
+                    <div class="bank-card">
+                        <div class="flex justify-between items-start mb-6">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="h-6 object-contain" alt="BCA">
+                            <span class="text-[10px] text-gray-400 font-semibold tracking-widest uppercase">Debit Card</span>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-gray-400 text-[10px] mb-1 uppercase tracking-wider">Nomor Rekening</p>
+                            <p class="text-xl font-mono text-gray-700 tracking-widest font-bold" id="bca-number">1234567890</p>
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-gray-400 text-[10px] mb-0.5 uppercase tracking-wider">Atas Nama</p>
+                                <p class="text-sm font-bold text-gray-800 uppercase tracking-wide">Anita Septiani</p>
+                            </div>
+                            <button onclick="copyToClipboard(this, 'bca-number')" class="copy-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+                                Salin
+                            </button>
+                        </div>
                     </div>
-                    <hr>
-                    <div class="text-center">
-                        <p class="font-bold text-gray-700">Mandiri</p>
-                        <p class="text-lg font-mono tracking-wider my-2" id="mandiri-number">0987654321</p>
-                        <p class="text-sm text-gray-600">a.n. Alexander</p>
-                        <button onclick="copyToClipboard('mandiri-number')" class="mt-2 text-xs bg-gray-200 text-gray-700 px-3 py-1 rounded-full hover:bg-gray-300">Salin No. Rekening</button>
+
+                    <!-- Kartu Mandiri -->
+                    <div class="bank-card">
+                        <div class="flex justify-between items-start mb-6">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg" class="h-8 object-contain" alt="Mandiri">
+                            <span class="text-[10px] text-gray-400 font-semibold tracking-widest uppercase">Debit Card</span>
+                        </div>
+                        <div class="mb-6">
+                            <p class="text-gray-400 text-[10px] mb-1 uppercase tracking-wider">Nomor Rekening</p>
+                            <p class="text-xl font-mono text-gray-700 tracking-widest font-bold" id="mandiri-number">0987654321</p>
+                        </div>
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-gray-400 text-[10px] mb-0.5 uppercase tracking-wider">Atas Nama</p>
+                                <p class="text-sm font-bold text-gray-800 uppercase tracking-wide">Alexander</p>
+                            </div>
+                            <button onclick="copyToClipboard(this, 'mandiri-number')" class="copy-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+                                Salin
+                            </button>
+                        </div>
                     </div>
+
+                    <!-- Kado Fisik -->
+                    <div class="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-6 text-left">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="bg-pink-100 p-2 rounded-full text-pink-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/></svg>
+                            </div>
+                            <h4 class="font-bold text-gray-700 text-sm">Kirim Kado Fisik</h4>
+                        </div>
+                        <p class="text-xs text-gray-500 leading-relaxed mb-4">
+                            Jl. Mawar Melati Indah No. 12, Komp. Griya Asri, Makassar, Sulawesi Selatan.
+                        </p>
+                        <button onclick="copyToClipboard(this, 'address-text')" class="text-xs text-pink-500 font-bold hover:underline flex items-center gap-1">
+                            Salin Alamat
+                        </button>
+                        <span id="address-text" class="hidden">Jl. Mawar Melati Indah No. 12, Komp. Griya Asri, Makassar, Sulawesi Selatan</span>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -923,7 +1053,7 @@
             });
         }
 
-        // --- GIFT SECTION ---
+        // --- GIFT SECTION (UPDATED) ---
         const btnGift = document.getElementById('btnGift');
         const giftDetails = document.getElementById('gift-details');
 
@@ -932,7 +1062,11 @@
                 const isHidden = giftDetails.classList.contains('hidden');
                 if (isHidden) {
                     giftDetails.classList.remove('hidden');
-                    btnGift.innerHTML = 'Tutup';
+                    btnGift.innerHTML = 'Tutup Tampilan';
+                    // Scroll to details smoothly
+                    setTimeout(() => {
+                        giftDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 100);
                 } else {
                     giftDetails.classList.add('hidden');
                     btnGift.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/></svg> Kirim Hadiah`;
@@ -940,10 +1074,18 @@
             });
         }
 
-        function copyToClipboard(elementId) {
+        function copyToClipboard(button, elementId) {
             const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text).then(() => {
-                alert('Nomor rekening berhasil disalin!');
+                // Visual feedback on button
+                const originalText = button.innerHTML;
+                button.innerHTML = 'Tersalin!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
             }).catch(err => {
                 alert('Gagal menyalin.');
             });
