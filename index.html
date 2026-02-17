@@ -132,15 +132,15 @@
 
         .timeline-item {
             position: relative;
-            margin-bottom: 250px;
+            margin-bottom: 180px;
             opacity: 0.3;
             transition: all 0.8s ease;
             width: 100%;
-            display: flex;
+            transform: translateY(50px); /* Animasi dari bawah */
         }
         .timeline-item.active {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateY(0);
         }
 
         .timeline-dot {
@@ -192,7 +192,9 @@
         }
 
         .timeline-bubble {
-            width: 46%; /* Kartu lebih lebar */
+            width: 90%;
+            max-width: 400px; /* Batas lebar */
+            margin: 80px auto 0 auto; /* Jarak dari dot & center */
             background-color: #ffffff;
             color: var(--text-dark);
             padding: 20px;
@@ -201,6 +203,7 @@
             border: 1px solid #fce4ec;
             transition: all 0.5s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center; /* Teks di tengah */
         }
         .timeline-item.active .timeline-bubble {
             background-color: var(--main-pink);
@@ -210,51 +213,18 @@
         .timeline-bubble::before {
             content: '';
             position: absolute;
-            left: -10px;
-            top: 10px;
+            left: 50%;
+            top: -10px; /* Panah di atas */
+            transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            border-right: 10px solid #ffffff;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #ffffff; /* Panah menunjuk ke atas */
             transition: all 0.5s ease;
         }
         .timeline-item.active .timeline-bubble::before {
-            border-right-color: var(--main-pink);
-        }
-
-        /* Alternating Layout (Zig-Zag) */
-        /* Ganjil (Kiri) */
-        .timeline-item:nth-child(odd) {
-            justify-content: flex-start;
-            transform: translateX(-50px); /* Animasi dari kiri */
-        }
-        .timeline-item:nth-child(odd).active { transform: translateX(0); }
-        .timeline-item:nth-child(odd) .timeline-bubble {
-            margin-left: auto;
-            margin-right: 53%; /* Jarak diperkecil agar lebih dekat ke garis */
-            text-align: right;
-        }
-        .timeline-item:nth-child(odd) .timeline-bubble::before {
-            left: auto;
-            right: -10px; /* Panah di kanan */
-            border-right: none;
-            border-left: 10px solid #ffffff;
-        }
-        .timeline-item.active:nth-child(odd) .timeline-bubble::before {
-            border-left-color: var(--main-pink);
-        }
-
-        /* Genap (Kanan) */
-        .timeline-item:nth-child(even) {
-            justify-content: flex-end;
-            transform: translateX(50px); /* Animasi dari kanan */
-        }
-        .timeline-item:nth-child(even).active { transform: translateX(0); }
-        .timeline-item:nth-child(even) .timeline-bubble {
-            margin-right: auto;
-            margin-left: 53%; /* Jarak diperkecil agar lebih dekat ke garis */
-            text-align: left;
+            border-bottom-color: var(--main-pink);
         }
         
         /* Badge Tanggal Timeline */
@@ -391,6 +361,61 @@
         .wish-badge.hadir { background: #d1fae5; color: #065f46; } /* Hijau */
         .wish-badge.tidak { background: #fee2e2; color: #991b1b; } /* Merah */
 
+        /* --- Merged Grid Gallery --- */
+        .merged-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px; /* Memberi jarak antar foto */
+            width: 100%;
+            /* Styling dipindah ke item */
+        }
+        .merged-gallery-item img {
+            width: 100%;
+            height: 250px; /* Tinggi tetap agar rapi */
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.07);
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .merged-gallery-item:hover img {
+            transform: scale(1.1);
+            z-index: 10;
+            position: relative;
+        }
+
+        /* --- Film Roll Gallery --- */
+        .film-roll-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .film-roll-track {
+            display: flex;
+            gap: 0; /* Foto menyatu */
+            width: max-content;
+            animation: film-roll-marquee 40s linear infinite; /* Durasi diperlambat */
+        }
+        .film-roll-item {
+            flex-shrink: 0;
+            width: 180px; /* Sedikit lebih kecil */
+            height: 250px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .film-roll-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @keyframes film-roll-marquee {
+            from { transform: translateX(0%); }
+            to { transform: translateX(-50%); }
+        }
+
         /* Story Love Slideshow Background */
         #story-slider-track {
             display: flex;
@@ -467,8 +492,8 @@
             <div class="flex items-center gap-4">
                 <!-- Sisi Kiri: Tulisan Vertikal -->
                 <div class="vertical-container" data-aos="fade-right">
-                    <div class="v-text-pink">Bride</div>
                     <div class="v-text-dark">The</div>
+                    <div class="v-text-pink">Bride</div>
                 </div>
                 
                 <!-- Sisi Kanan: Kartu Foto -->
@@ -490,8 +515,8 @@
             <div class="flex items-center gap-4 flex-row-reverse">
                 <!-- Sisi Kanan: Tulisan Vertikal -->
                 <div class="vertical-container" data-aos="fade-left">
-                    <div class="v-text-pink" style="transform: rotate(0deg); writing-mode: vertical-lr;">Groom</div>
                     <div class="v-text-dark" style="transform: rotate(0deg); writing-mode: vertical-lr;">The</div>
+                    <div class="v-text-pink" style="transform: rotate(0deg); writing-mode: vertical-lr;">Groom</div>
                 </div>
                 
                 <!-- Sisi Kiri: Kartu Foto -->
@@ -639,18 +664,36 @@
                 <div class="h-[1px] w-20 bg-pink-200 mx-auto mt-4"></div>
             </div>
 
-            <div class="px-2 grid grid-cols-2 gap-2" data-aos="fade-up">
-                <div class="gallery-item shadow-sm">
-                    <img src="https://wedaily.id/wp-content/uploads/2024/02/72ecca5017a40eb1c2fac742d21f93a7.jpg" alt="[Galeri 1]">
+            <!-- Grid Layout -->
+            <div class="px-4 mb-12" data-aos="fade-up">
+                <div class="merged-gallery-grid">
+                    <!-- 2 Kolom x 4 Baris = 8 Foto -->
+                    <div class="merged-gallery-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/72ecca5017a40eb1c2fac742d21f93a7.jpg" alt="Galeri 1"></div>
+                    <div class="merged-gallery-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/16eea3b71c7a234325bc6da0981e87e7.jpg" alt="Galeri 2"></div>
+                    <div class="merged-gallery-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/9765fe9f49190b0abaae71862b974bff.jpg" alt="Galeri 3"></div>
+                    <div class="merged-gallery-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/b7f4dc7ff0b9873b25457fb69387359b.jpg" alt="Galeri 4"></div>
+                    <div class="merged-gallery-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/16eea3b71c7a234325bc6da0981e87e7.jpg" alt="Galeri 5"></div>
+                    <div class="merged-gallery-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/72ecca5017a40eb1c2fac742d21f93a7.jpg" alt="Galeri 6"></div>
+                    <div class="merged-gallery-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/b7f4dc7ff0b9873b25457fb69387359b.jpg" alt="Galeri 7"></div>
+                    <div class="merged-gallery-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/9765fe9f49190b0abaae71862b974bff.jpg" alt="Galeri 8"></div>
                 </div>
-                <div class="gallery-item shadow-sm">
-                    <img src="https://wedaily.id/wp-content/uploads/2024/02/16eea3b71c7a234325bc6da0981e87e7.jpg" alt="[Galeri 2]">
-                </div>
-                <div class="gallery-item shadow-sm">
-                    <img src="https://wedaily.id/wp-content/uploads/2024/02/9765fe9f49190b0abaae71862b974bff.jpg" alt="[Galeri 3]">
-                </div>
-                <div class="gallery-item shadow-sm">
-                    <img src="https://wedaily.id/wp-content/uploads/2024/02/b7f4dc7ff0b9873b25457fb69387359b.jpg" alt="[Galeri 4]">
+            </div>
+
+            <!-- Film Roll Layout -->
+            <div class="film-roll-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="film-roll-track">
+                    <!-- Images (doubled for seamless loop) -->
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/72ecca5017a40eb1c2fac742d21f93a7.jpg" alt="Galeri Roll 1"></div>
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/16eea3b71c7a234325bc6da0981e87e7.jpg" alt="Galeri Roll 2"></div>
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/9765fe9f49190b0abaae71862b974bff.jpg" alt="Galeri Roll 3"></div>
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/b7f4dc7ff0b9873b25457fb69387359b.jpg" alt="Galeri Roll 4"></div>
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/16eea3b71c7a234325bc6da0981e87e7.jpg" alt="Galeri Roll 5"></div>
+                    <!-- Duplicates -->
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/72ecca5017a40eb1c2fac742d21f93a7.jpg" alt="Galeri Roll 1"></div>
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/16eea3b71c7a234325bc6da0981e87e7.jpg" alt="Galeri Roll 2"></div>
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/9765fe9f49190b0abaae71862b974bff.jpg" alt="Galeri Roll 3"></div>
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/b7f4dc7ff0b9873b25457fb69387359b.jpg" alt="Galeri Roll 4"></div>
+                    <div class="film-roll-item"><img src="https://wedaily.id/wp-content/uploads/2024/02/16eea3b71c7a234325bc6da0981e87e7.jpg" alt="Galeri Roll 5"></div>
                 </div>
             </div>
         </section>
@@ -759,7 +802,7 @@
         // Inisialisasi AOS
         AOS.init({
             duration: 1000,
-            once: true,
+            once: false,
             offset: 100
         });
 
