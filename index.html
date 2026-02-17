@@ -450,6 +450,10 @@
             <div class="relative z-10 text-center px-6" data-aos="zoom-in">
                 <p class="font-serif text-white tracking-[0.3em] text-sm mb-4 drop-shadow-md">THE WEDDING OF</p>
                 <h1 class="font-cursive text-6xl text-white mb-8 drop-shadow-lg">Anita & Alex</h1>
+                <div class="mb-8 text-white animate__animated animate__fadeInUp animate__delay-1s">
+                    <p class="font-serif text-sm italic mb-2 opacity-90">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+                    <h2 id="guest-name" class="text-2xl font-bold drop-shadow-md">Tamu Undangan</h2>
+                </div>
                 <button id="btn-open" class="bg-pink-theme text-white px-8 py-3 rounded-full font-bold shadow-lg hover:scale-105 transition-transform flex items-center gap-2 mx-auto">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM13.991 3.004C13.691 2.123 12.795 1.5 11.691 1.5c-1.104 0-2.003.623-2.303 1.504h-2.776C6.312 2.123 5.413 1.5 4.309 1.5c-1.104 0-2.003.623-2.303 1.504H1v10h14v-10h-1.009zM11.691 2.5c.59 0 1.072.366 1.219.875h-2.438c.147-.509.629-.875 1.219-.875zM4.309 2.5c.59 0 1.072.366 1.219.875H3.09c.147-.509.629-.875 1.219-.875z"/></svg>
                     Buka Undangan
@@ -1026,6 +1030,18 @@
         // Load ucapan saat halaman dibuka
         loadWishes();
 
+        // --- GUEST NAME LOGIC (URL PARAMETER) ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName = urlParams.get('to');
+        
+        if (guestName) {
+            // Update Nama di Cover
+            document.getElementById('guest-name').innerText = guestName;
+            
+            // Auto-fill Nama di Form RSVP (Opsional, agar tamu tidak perlu ketik ulang)
+            const rsvpNameInput = document.querySelector('input[name="nama"]');
+            if (rsvpNameInput) rsvpNameInput.value = guestName;
+        }
     </script>
 </body>
 </html>
