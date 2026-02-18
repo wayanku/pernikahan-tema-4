@@ -15,11 +15,15 @@
             --main-pink: #ff85a2;
             --text-dark: #4a4a4a;
         }
+        html, body {
+            overflow-x: hidden; /* Kunci mutlak agar tidak bisa scroll samping */
+            width: 100%;
+            overscroll-behavior-x: none; /* Mencegah efek 'membal' atau swipe gesture browser */
+        }
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f8f8f8;
             color: var(--text-dark);
-            overflow-x: hidden;
         }
         .font-serif { font-family: 'Playfair Display', serif; }
         .font-cursive { font-family: 'Great Vibes', cursive; }
@@ -668,14 +672,13 @@
                 </div>
 
                 <p class="text-[13px] text-white leading-relaxed mb-10 px-6 font-medium italic drop-shadow-md" data-aos="fade-up" data-aos-delay="400">
-                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri..." <br>
-                    <span class="font-bold not-italic block mt-2 text-white">Ar-Rum 21</span>
+                    "Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami."
                 </p>
             </div>
         </section>
 
         <!-- SECTION 2: BRIDE -->
-        <section class="pt-20 pb-4 px-4 bg-white">
+        <section class="pt-20 pb-4 px-4 bg-white overflow-hidden">
             <div class="flex items-center gap-4">
                 <!-- Sisi Kiri: Tulisan Vertikal -->
                 <div class="vertical-container" data-aos="fade-right">
@@ -702,7 +705,7 @@
         </section>
 
         <!-- SECTION 3: GROOM -->
-        <section class="pt-4 pb-20 px-4 bg-white">
+        <section class="pt-4 pb-20 px-4 bg-white overflow-hidden">
             <div class="flex items-center gap-4 flex-row-reverse">
                 <!-- Sisi Kanan: Tulisan Vertikal -->
                 <div class="vertical-container" data-aos="fade-left">
@@ -729,7 +732,7 @@
         </section>
 
         <!-- SECTION 5: JADWAL & LOKASI -->
-        <section class="bg-white pb-24">
+        <section class="bg-white pb-24 overflow-hidden">
             <div class="text-center py-12" data-aos="zoom-in">
                 <h2 class="font-serif text-4xl text-pink-theme italic tracking-wide">Save The Date</h2>
             </div>
@@ -868,7 +871,7 @@
         </section>
 
         <!-- SECTION 4: GALERI FOTO -->
-        <section class="py-20 bg-[#fdf8f9]">
+        <section class="py-20 bg-[#fdf8f9] overflow-hidden">
             <div class="text-center mb-10" data-aos="fade-up">
                 <h2 class="font-serif text-4xl text-pink-theme italic">Momen Bahagia</h2>
                 <div class="h-[1px] w-20 bg-pink-200 mx-auto mt-4"></div>
@@ -909,7 +912,7 @@
         </section>
 
         <!-- SECTION: KIRIM HADIAH (UPDATED) -->
-        <section class="py-20 px-6 bg-white text-center">
+        <section class="py-20 px-6 bg-white text-center overflow-hidden">
             <div data-aos="fade-up">
                 <h2 class="font-serif text-4xl text-pink-theme italic">Kirim Hadiah</h2>
                 <div class="h-[1px] w-20 bg-pink-200 mx-auto mt-4 mb-6"></div>
@@ -992,7 +995,7 @@
         </section>
 
         <!-- SECTION 6: RSVP & UCAPAN -->
-        <section class="py-20 px-6 bg-white">
+        <section class="py-20 px-6 bg-white overflow-hidden">
             <div class="text-center mb-12" data-aos="fade-up">
                 <h2 class="font-cursive text-5xl text-pink-theme">Wishes & RSVP</h2>
             </div>
@@ -1137,6 +1140,9 @@
 
         // Open Invitation Logic
         btnOpen.addEventListener('click', () => {
+            // PERBAIKAN: Paksa scroll ke paling atas halaman setiap kali undangan dibuka
+            window.scrollTo(0, 0);
+
             music.play();
             isPlaying = true;
             musicToggle.classList.add('music-spin');
@@ -1353,7 +1359,7 @@
                 const size = Math.random() * 3 + 2 + 'px';
                 particle.style.width = size;
                 particle.style.height = size;
-                particle.style.left = Math.random() * 100 + '%';
+                particle.style.left = Math.random() * 90 + 5 + '%'; // Batasi agar tidak mepet pinggir (5% - 95%)
                 particle.style.animationDuration = Math.random() * 10 + 10 + 's'; // 10-20s
                 particle.style.animationDelay = Math.random() * 5 + 's';
                 
